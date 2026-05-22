@@ -1,6 +1,9 @@
 # Compiler and flags
 CC      := gcc
-CFLAGS  := -Wall -Wextra -std=c11 -g -O0 -fsanitize=address
+DEBUG_FLAGS = -g -O0 -fsanitize=address
+RELEASE_FLAGS = -O2
+CFLAGS  := -Wall -Wextra -std=c11 
+LDLIBS = -lm
 
 # Directories
 BUILD_DIR := build
@@ -14,11 +17,17 @@ SRCS := $(wildcard *.c)
 OBJS := $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRCS))
 
 # Default target
-all: $(TARGET)
+all: release
+
+release: CFLAGS += $(RELEASE_FLAGS)
+release: $(TARGET)
+
+debug: CFLAGS += $(DEBUG_FLAGS)
+debug: $(TARGET)
 
 # Link executable
 $(TARGET): $(OBJS) | $(BIN_DIR)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ $(LDLIBS) -o $@
 
 # Compile .c -> build/.o
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)

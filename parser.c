@@ -1,6 +1,5 @@
 #include <stdbool.h>
 #include <stdarg.h>
-#include <stdlib.h>
 #include "parser.h"
 
 #define check_error(expr) \
@@ -24,7 +23,6 @@ void free_expr(Expr *expr) {
     if (expr == NULL)
         return;
     
-    free(expr->token.value);
     free_expr(expr->left);
     free_expr(expr->right);
     free(expr);
@@ -102,15 +100,15 @@ static Expr *primary(Parser *pr) {
     return NULL;
 }
 
-static Expr *exponent(Parser *pr) {
+static Expr *power(Parser *pr) {
     Expr *left = primary(pr);
     
-    if (match(pr, 1, EXP)) {
+    if (match(pr, 1, POW)) {
         Expr *expr = new_expr(previous(pr));
         check_error(left)
         expr->left = left;
 
-        Expr *right = exponent(pr);
+        Expr *right = power(pr);
         check_error(right)
         expr->right = right;
 
@@ -134,7 +132,7 @@ static Expr *unary(Parser *pr) {
         fail_state(expr)
     }
 
-    Expr *expr = exponent(pr);
+    Expr *expr = power(pr);
     return expr;
 }
 

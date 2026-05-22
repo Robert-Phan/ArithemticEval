@@ -86,11 +86,11 @@ static void scan_token(Scanner *sc) {
     case '-':
         add_token(sc, MINUS); break;
     case '*':
-        add_token(sc, match(sc, '*') ? MULT : EXP); break;
+        add_token(sc, match(sc, '*') ? POW : MULT); break;
     case '/':
         add_token(sc, DIV); break;
     case '^':
-        add_token(sc, EXP); break;
+        add_token(sc, POW); break;
     
     default:
         if (is_digit(c))

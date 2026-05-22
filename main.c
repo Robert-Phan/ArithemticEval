@@ -1,12 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "parser.h"
+#include "eval.h"
 
 int main(int argc, char const *argv[])
 {
-    TokenList *list = scan("1*2");
-    Expr *tree = parse(list);
-    
+    char buffer[256];
+
+    fgets(buffer, sizeof(buffer), stdin);
+
+    printf("%f\n", eval(buffer));
+
     return 0;
 }

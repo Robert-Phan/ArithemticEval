@@ -16,3 +16,5 @@ struct expr {
 Expr *parse(TokenList *tokens);
 
 void free_expr(Expr *expr);
+
+char *expr_str(Expr *expr);

@@ -6,7 +6,7 @@ typedef enum {
     MINUS,
     MULT,
     DIV,
-    EXP,
+    POW,
     LEFT_PAREN,
     RIGHT_PAREN
 } TokenType;
